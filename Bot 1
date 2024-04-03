@@ -1,0 +1,64 @@
+<variables>
+  <!-- Your existing variables -->
+  <variable type="" id="ConsecutiveLossesCount">Consecutive Losses Count</variable>
+</variables>
+
+<block type="variables_set" id="set_consecutive_losses_count" x="0" y="0">
+  <field name="VAR" id="ConsecutiveLossesCount" variabletype="">Consecutive Losses Count</field>
+  <value name="VALUE">
+    <block type="math_number" id="set_to_zero">
+      <field name="NUM">0</field>
+    </block>
+  </value>
+  <next>
+    <!-- Your existing blocks -->
+  </next>
+</block>
+
+<!-- Inside the ELSE statement of the AFTERPURCHASE_STACK block -->
+<statement name="ELSE">
+  <block type="variables_change" id="increment_consecutive_losses_count">
+    <field name="VAR" id="ConsecutiveLossesCount" variabletype="">Consecutive Losses Count</field>
+    <value name="DELTA">
+      <block type="math_number" id="increment_by_one">
+        <field name="NUM">1</field>
+      </block>
+    </value>
+    <next>
+      <block type="controls_if" id="check_consecutive_losses">
+        <mutation else="1"></mutation>
+        <value name="IF0">
+          <block type="logic_compare" id="check_if_two_losses">
+            <field name="OP">EQ</field>
+            <value name="A">
+              <block type="variables_get" id="get_consecutive_losses_count">
+                <field name="VAR" id="ConsecutiveLossesCount" variabletype="">Consecutive Losses Count</field>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number" id="two_losses"> <!-- Change this to 2 -->
+                <field name="NUM">2</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <!-- Perform actions after two consecutive losses -->
+          <!-- Reset Consecutive Losses Count to 0 -->
+          <block type="variables_set" id="reset_consecutive_losses_count">
+            <field name="VAR" id="ConsecutiveLossesCount" variabletype="">Consecutive Losses Count</field>
+            <value name="VALUE">
+              <block type="math_number" id="reset_to_zero">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+          </block>
+          <!-- Add any other actions here -->
+        </statement>
+        <next>
+          <!-- Continue with the rest of your code -->
+        </next>
+      </block>
+    </next>
+  </block>
+</statement>
